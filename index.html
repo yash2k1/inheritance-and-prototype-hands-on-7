@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Ayyar of Object Hands on 6</title>
+</head>
+
+<body>
+    <h1>Ayyar of Object Hands on 6</h1>
+    <!--common array of objects-->
+    <pre class="containerObject">
+let studentRecords = [ {name: 'John', id: 123, marks : 98 },
+  {name: 'Baba', id: 101, marks : 23 },
+  {name: 'yaga', id: 200, marks : 45 },
+  {name: 'Wick', id: 115, marks : 75 } ] 
+    </pre>
+    <!-- question 1 -->
+    <div class="container">
+        <div class="question">
+            Ques1. Create 2 objects - parent and child. Attach methods to parent and use those methods in child object
+            using parents prototype
+        </div>
+        <pre class="ans">
+// parent object
+const parent ={
+    name: "Parent",
+    age:50,
+    about:info,
+}
+
+// attaching method to parent
+function info(){
+    console.log(`${this.name} is ${this.age} years old`)
+}
+
+// children object
+const child={
+    name:"child",
+    age:21,
+   childAbout: Object.create(parent), 
+}
+
+child.childAbout.about.call(child);
+</pre>
+        <div class="ans">
+            <h3>explaination:</h3>
+            <p class="output">
+                Object.create(parent) it create a new object. create a [[prototype]] which store
+                the methods and properties of parent object in ChildAbout as a value an empty {} </p> <br>
+            <h3>output: </h3>
+            <div>child is 21 years old</div>
+        </div>
+    </div>
+    <!-- question 2 -->
+    <div class="container">
+        <div class="question">
+            Ques2. Write code to explain prototype chaining
+        </div>
+        <div class="ans">
+        <pre class="ans">
+const collegeDekho = {
+    trademark:"collegeDekho",
+ 
+   };
+   
+   const prepBytes = {
+     teachers:"shubham sir and lakshay sir",
+     batche:"EAC-01"
+   }
+   
+   Object.setPrototypeOf(prepBytes, collegeDekho);
+// inherit the collegeDekho trademark inside proto object
+console.log(prepBytes.__proto__); 
+// that proto obje has its own method and constructions
+console.log(Object.__proto__.__proto__);
+// of that proto type has nothing its null          
+console.log(Object.__proto__.__proto__.__proto__);
+             
+</pre>
+<h3>explaination: </h3>
+proto is also known as [[prototype]] or dunder prototype it is an object .It is present in every 
+object including itself it help in inherite the propertie of the other object by storing the refence 
+of other objects method or properties . it is done by Object.setPrototypeOf() or by Object.create() 
+proto chain is just accesing the __proto__ of object till the __proto__ is null
+        <h3>output: </h3>
+        <div class="output">
+            {trademark: 'collegeDekho'} <br>
+            {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …} <br>
+            null <br>
+        </div>
+    </div>
+</div>
+    <!-- question 3 -->
+    <div class="container">
+        <div class="question">
+            Ques3. Add a method to calculate sum of all elements in Array in array's protype, use that method to
+            calculate sum for multiple arrays
+        </div>
+        <div class="ans">
+        <pre class="ans">
+function sum(){
+    return this.reduce((prev,current)=>prev+current);
+ }
+ const arr= Array();
+ Object.setPrototypeOf(arr,sum);
+ 
+ let arr1=[4,2,42,1];
+ let arr2=[24,1,2,1];
+ let arr3=[4,5,32,2];
+ let arr4=[9,8,2,1];
+ 
+ console.log(Object.getPrototypeOf(arr).call(arr1));
+ console.log(Object.getPrototypeOf(arr).call(arr2));
+ console.log(Object.getPrototypeOf(arr).call(arr3));
+ console.log(Object.getPrototypeOf(arr).call(arr4)); 
+</pre>
+<h3>explaination:</h3>
+arr is an array which has prototype propertie which stores a method sum() 
+with the help of setPrototypeOf ( Object.setPrototypeOf(arr,sum)) and get 
+that function with this Object.getPrototypeOf(arr) here we want to call 
+the sum funtion which is expecting a this value which is provide by call() method
+explicitly. 
+        <h3>output: </h3>
+        <div class="output">
+49 <br>
+28 <br>
+43 <br>
+20 <br> 
+        </div>
+    </div>
+    </div>
+    <!-- question 4 -->
+    <div class="container">
+        <div class="question">
+            Ques4. Write a JavaScript function to retrieve all the names of object's own and inherited properties.
+        </div>
+        <div class="ans">
+        <pre class="ans">
+
+            const human={
+                feature:"ability to think",
+            }            
+            const person={
+                fName:"yash",
+                age:21,
+            }
+            Object.setPrototypeOf(person,human);
+            
+            function retriveInfo(objs){
+            for(let obj in objs){
+                console.log(obj);
+            }
+            }
+            retriveInfo(person); 
+</pre>
+     <h3>explaination:</h3>
+        person is an object which own fName , age and inherited feature propertie from human.
+        by seting the [[prototype]] or __proto__ of person
+
+
+        <h3>output: </h3>
+        <div class="output">
+            fName <br>
+            age <br>
+            feature <br>
+
+        </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
